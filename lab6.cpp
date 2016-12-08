@@ -6,7 +6,7 @@ using namespace std; //для cin, cout
 
 struct Phone //Телефон
 {
-	char firm[64]; // Фирма
+	char firm[64]; // Название
 	char country[64];// Страна производитель
 	double price; // Цена
 };
@@ -83,7 +83,7 @@ int main(int argc, char* argv[])
 	{
 
 		p = (List *)malloc(sizeof(List)); // Выделяем память под элемент
-		printf("Firma: ");
+		printf("Name: ");
 		cin >> p->phone.firm;
 		printf("Country: ");
 		cin >> p->phone.country;
