@@ -1,35 +1,31 @@
-// lab6.cpp: определяет точку входа для консольного приложения.
-//
-
-#include "stdafx.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <conio.h>
-#include <iostream> //для cin, cout
-using namespace std; //для cin, cout
+#include <iostream> //РґР»СЏ cin, cout
+using namespace std; //РґР»СЏ cin, cout
 
-struct Phone //Телефон
+struct Phone //РўРµР»РµС„РѕРЅ
 {
-	char firm[64]; // Фирма
-	char country[64];// Страна производитель
-	double price; // Цена
+	char firm[64]; // Р¤РёСЂРјР°
+	char country[64];// РЎС‚СЂР°РЅР° РїСЂРѕРёР·РІРѕРґРёС‚РµР»СЊ
+	double price; // Р¦РµРЅР°
 };
 
-struct List // Список
+struct List // РЎРїРёСЃРѕРє
 {
-	Phone phone; // Инф поле
-	List *pNext; // Указательна следующий элемент
+	Phone phone; // РРЅС„ РїРѕР»Рµ
+	List *pNext; // РЈРєР°Р·Р°С‚РµР»СЊРЅР° СЃР»РµРґСѓСЋС‰РёР№ СЌР»РµРјРµРЅС‚
 };
 
-// Функция добавления элемента в начало списка
-void addFirst(List *& pF, // Указатель на начало списка
-	List* p) // Указатель на добавляемый элемент
+// Р¤СѓРЅРєС†РёСЏ РґРѕР±Р°РІР»РµРЅРёСЏ СЌР»РµРјРµРЅС‚Р° РІ РЅР°С‡Р°Р»Рѕ СЃРїРёСЃРєР°
+void addFirst(List *& pF, // РЈРєР°Р·Р°С‚РµР»СЊ РЅР° РЅР°С‡Р°Р»Рѕ СЃРїРёСЃРєР°
+	List* p) // РЈРєР°Р·Р°С‚РµР»СЊ РЅР° РґРѕР±Р°РІР»СЏРµРјС‹Р№ СЌР»РµРјРµРЅС‚
 {
 	p->pNext = pF;
 	pF = p;
 }
-// Удаление элемента из начала списка
-List * delFirst(List *&pF) // Функция возвращает указатель на удаляемый элемент
+// РЈРґР°Р»РµРЅРёРµ СЌР»РµРјРµРЅС‚Р° РёР· РЅР°С‡Р°Р»Р° СЃРїРёСЃРєР°
+List * delFirst(List *&pF) // Р¤СѓРЅРєС†РёСЏ РІРѕР·РІСЂР°С‰Р°РµС‚ СѓРєР°Р·Р°С‚РµР»СЊ РЅР° СѓРґР°Р»СЏРµРјС‹Р№ СЌР»РµРјРµРЅС‚
 {
 	if (pF == 0) return 0;
 	List *p = pF;
@@ -37,74 +33,74 @@ List * delFirst(List *&pF) // Функция возвращает указатель на удаляемый элемент
 	return p;
 
 }
-// Добавление элемента перед заданным
+// Р”РѕР±Р°РІР»РµРЅРёРµ СЌР»РµРјРµРЅС‚Р° РїРµСЂРµРґ Р·Р°РґР°РЅРЅС‹Рј
 bool add(List *&pF, List * pZad, List *p)
 {
-	// Функция возвращает true при нормальном завершении и false в случае ошибки
-	if (pZad == pF) // Элемент будет первым
+	// Р¤СѓРЅРєС†РёСЏ РІРѕР·РІСЂР°С‰Р°РµС‚ true РїСЂРё РЅРѕСЂРјР°Р»СЊРЅРѕРј Р·Р°РІРµСЂС€РµРЅРёРё Рё false РІ СЃР»СѓС‡Р°Рµ РѕС€РёР±РєРё
+	if (pZad == pF) // Р­Р»РµРјРµРЅС‚ Р±СѓРґРµС‚ РїРµСЂРІС‹Рј
 	{
 		p->pNext = pF;
 		pF = p;
 		return true;
 	}
 
-	List *pPred = pF; // Указатель на предыдущий элемент перед pZad
+	List *pPred = pF; // РЈРєР°Р·Р°С‚РµР»СЊ РЅР° РїСЂРµРґС‹РґСѓС‰РёР№ СЌР»РµРјРµРЅС‚ РїРµСЂРµРґ pZad
 	while (pPred->pNext != pZad && pPred->pNext)
 		pPred = pPred->pNext;
-	if (pPred->pNext == 0) return false; // Элемента pZad нет в списке
+	if (pPred->pNext == 0) return false; // Р­Р»РµРјРµРЅС‚Р° pZad РЅРµС‚ РІ СЃРїРёСЃРєРµ
 	p->pNext = pZad;
 	pPred->pNext = p;
 	return true;
 }
-// Удаление любого элемента p из списка
-List * del(List*& pF, List *p) // Функция возвращает указатель на удаленный элемент
+// РЈРґР°Р»РµРЅРёРµ Р»СЋР±РѕРіРѕ СЌР»РµРјРµРЅС‚Р° p РёР· СЃРїРёСЃРєР°
+List * del(List*& pF, List *p) // Р¤СѓРЅРєС†РёСЏ РІРѕР·РІСЂР°С‰Р°РµС‚ СѓРєР°Р·Р°С‚РµР»СЊ РЅР° СѓРґР°Р»РµРЅРЅС‹Р№ СЌР»РµРјРµРЅС‚
 {
 	if (pF == 0) return 0;
-	if (pF == p) // Удаляем первый элемент
+	if (pF == p) // РЈРґР°Р»СЏРµРј РїРµСЂРІС‹Р№ СЌР»РµРјРµРЅС‚
 	{
 		pF = pF->pNext;
 		return p;
 	}
 	else
 	{
-		List *pPred = pF; // Указатель на предыдущий элемент перед p
+		List *pPred = pF; // РЈРєР°Р·Р°С‚РµР»СЊ РЅР° РїСЂРµРґС‹РґСѓС‰РёР№ СЌР»РµРјРµРЅС‚ РїРµСЂРµРґ p
 		while (pPred->pNext != p && pPred->pNext)
 			pPred = pPred->pNext;
-		if (pPred->pNext == 0) return 0; // Элемента p нет в списке
+		if (pPred->pNext == 0) return 0; // Р­Р»РµРјРµРЅС‚Р° p РЅРµС‚ РІ СЃРїРёСЃРєРµ
 		pPred->pNext = p->pNext;
 		return p;
 	}
-	while (delFirst(pF)); // Очистка списка
+	while (delFirst(pF)); // РћС‡РёСЃС‚РєР° СЃРїРёСЃРєР°
 }
 
 int main(int argc, char* argv[])
 {
-	List *pF = 0; // Список пуст
+	List *pF = 0; // РЎРїРёСЃРѕРє РїСѓСЃС‚
 	List *p;
-	// Ввод списка
-	char Ch; // Переменная для ввода условия продолжения ввода
+	// Р’РІРѕРґ СЃРїРёСЃРєР°
+	char Ch; // РџРµСЂРµРјРµРЅРЅР°СЏ РґР»СЏ РІРІРѕРґР° СѓСЃР»РѕРІРёСЏ РїСЂРѕРґРѕР»Р¶РµРЅРёСЏ РІРІРѕРґР°
 	do
 	{
 
-		p = (List *)malloc(sizeof(List)); // Выделяем память под элемент
+		p = (List *)malloc(sizeof(List)); // Р’С‹РґРµР»СЏРµРј РїР°РјСЏС‚СЊ РїРѕРґ СЌР»РµРјРµРЅС‚
 		printf("Firma: ");
 		cin >> p->phone.firm;
 		printf("Country: ");
 		cin >> p->phone.country;
 		printf("Price: ");
 		cin >> p->phone.price;
-		addFirst(pF, p); // Добавляем элемент в начало списка
+		addFirst(pF, p); // Р”РѕР±Р°РІР»СЏРµРј СЌР»РµРјРµРЅС‚ РІ РЅР°С‡Р°Р»Рѕ СЃРїРёСЃРєР°
 		printf("For continue press Y or y else any key! ");
 		cin >> Ch;
 	} while (Ch == 'Y' || Ch == 'y');
-	// Вывод спика
-	for (List *pi = pF; pi; pi = pi->pNext) // Просмотр списка
+	// Р’С‹РІРѕРґ СЃРїРёРєР°
+	for (List *pi = pF; pi; pi = pi->pNext) // РџСЂРѕСЃРјРѕС‚СЂ СЃРїРёСЃРєР°
 		printf("\n\n %s %s price=%.2f", pi->phone.firm, pi->phone.country, pi->phone.price);
 
-	// Сортировка списка
+	// РЎРѕСЂС‚РёСЂРѕРІРєР° СЃРїРёСЃРєР°
 	for (List *pi = pF; pi->pNext;)
 	{
-		// Ищем минимальный элемент в списке
+		// РС‰РµРј РјРёРЅРёРјР°Р»СЊРЅС‹Р№ СЌР»РµРјРµРЅС‚ РІ СЃРїРёСЃРєРµ
 		double min = pi->phone.price;
 		List *pmin = pi;
 		for (List *pj = pi->pNext; pj; pj = pj->pNext)
@@ -113,17 +109,17 @@ int main(int argc, char* argv[])
 			min = pj->phone.price;
 			pmin = pj;
 		}
-		if (pi != pmin) // Минимальный элемент делаем первым, он будет перед pi
+		if (pi != pmin) // РњРёРЅРёРјР°Р»СЊРЅС‹Р№ СЌР»РµРјРµРЅС‚ РґРµР»Р°РµРј РїРµСЂРІС‹Рј, РѕРЅ Р±СѓРґРµС‚ РїРµСЂРµРґ pi
 		{
 			del(pF, pmin);
 			add(pF, pi, pmin);
 		}
 		else pi = pi->pNext;
 	}
-	// Печать списка после сортировки
+	// РџРµС‡Р°С‚СЊ СЃРїРёСЃРєР° РїРѕСЃР»Рµ СЃРѕСЂС‚РёСЂРѕРІРєРё
 	printf("\n\nSrting:");
-	for (List *pi = pF; pi; pi = pi->pNext) // Просмотр списка
+	for (List *pi = pF; pi; pi = pi->pNext) // РџСЂРѕСЃРјРѕС‚СЂ СЃРїРёСЃРєР°
 		printf("\n%s %s price=%.2f", pi->phone.firm, pi->phone.country, pi->phone.price);
-	system("pause"); // Останавливаем программу, ждем нажатия любой клавиши
+	system("pause"); // РћСЃС‚Р°РЅР°РІР»РёРІР°РµРј РїСЂРѕРіСЂР°РјРјСѓ, Р¶РґРµРј РЅР°Р¶Р°С‚РёСЏ Р»СЋР±РѕР№ РєР»Р°РІРёС€Рё
 	return 0;
 }
